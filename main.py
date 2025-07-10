@@ -100,8 +100,3 @@ else:
     count = min(len(expense_list), len(balance_list), len(loan_list))
     for i in range(count):
         print(f"{i+1}) Expense: {expense_list[i]}, Balance: {balance_list[i]}, Loan: {loan_list[i]}.")
-
-
-
-
-
