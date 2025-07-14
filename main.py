@@ -6,50 +6,50 @@
 # Change the code to save the balance and loan in lists after each expense
 # Change the code to use a list for saving the expenses
 # Use the lists to print the necessary data
+# Refactor code to use at least two types of data structures for working with data:
+# For example: Expenses as a dictionary, Initial balances as tuples
+
 name = input("What is your name? ")
 surname = input("What is your surname? ")
 full_name = name + " " + surname
 # print("The customer's full name is", full_name)
 
-while True:
-    loan_balance_input = input("What is your active loan balance? ")
-    if loan_balance_input.replace('.', '', 1).isnumeric():
-        if '.' in loan_balance_input:
-            loan_balance = float(loan_balance_input)
+expenses_sheet = []
+balances_list = []
+#################################################################### get loan balance
+def get_loan_balance():
+    while True:
+        loan_balance_input = input("What is your active loan balance? ")
+        if loan_balance_input.replace('.', '', 1).isnumeric():
+            loan_balance = float(loan_balance_input) if '.' in loan_balance_input else int(loan_balance_input)
+            return loan_balance
         else:
-            loan_balance = int(loan_balance_input)
-    else:
-        print("Please, enter numeric value for the 'Loan Balance'.")
-        continue
-    break
+            print("Error!!! enter numeric value for the 'Loan Balance'.")
 
-while True:
-    balance_input = input("What is your balance? ")
-    if balance_input.replace('.', '', 1).isnumeric():
-        if '.' in balance_input:
-            balance = float(balance_input)
+####################################################################### get balance
+def get_balance():
+    while True:
+        balance_input = input("What is your balance? ")
+        if balance_input.replace('.', '', 1).isnumeric():
+            balance = float(balance_input) if '.' in balance_input else int(balance_input)
+            return balance
         else:
-            balance = int(balance_input)
-    else:
-        print("Please, enter numeric value for the 'Balance'.")
-        continue
-    break
+            print("Error!!! enter numeric value for the 'Balance'.")
 
-while True:
-    expense_input = input("What is your expense? ")
-    if expense_input.replace('.', '', 1).isnumeric():
-        if '.' in expense_input:
-            expense = float(expense_input)
+###################################################################### get first expense
+def get_expense():
+    while True:
+        expense_input = input("What is your expense? ")
+        if expense_input.replace('.', '', 1).isnumeric():
+            expense = float(expense_input) if '.' in expense_input else int(expense_input)
+            return expense
         else:
-            expense = int(expense_input)
-    else:
-        print("Please, enter numeric value for the 'Expense'.")
-        continue
-    break
+            print("Error!!! enter numeric value for the 'Expense'.")
 
-expense_list = []
-balance_list = []
-loan_list = []
+
+loan_balance = get_loan_balance()
+balance = get_balance()
+expense = get_expense()
 
 expense_count = 0
 done = False
@@ -58,22 +58,24 @@ while not done:
     expense_count += 1
     if expense <= balance:
         balance = balance - expense
-        print("ATTENTION \n Purchase has been done successfully!")
+        print("___ATTENTION___ Purchase has been done successfully!")
         print(f"{full_name}'s current balance after {expense_count} purchase is: {balance}, the loan is {loan_balance}:")
     elif expense <= balance + loan_balance:
-        print("WARNING \n You don't have enough balance, the purchase will be done from your active loan balance.")
+        print("___WARNING___ You don't have enough balance, the purchase will be done from your active loan balance.")
         debt = balance - expense
         loan_balance -= abs(debt)
         balance = 0
-        print("ATTENTION \n Purchase has been done successfully!")
+        print("___ATTENTION___ Purchase has been done successfully!")
         print(f"{full_name}'s current balance after {expense_count} purchase is: {balance}, and the loan is: {loan_balance}")
     else:
-        print(f"WARNING \nYour expense [{expense}] is more than your fund: [loan:{loan_balance} + balance:{balance}].")
+        print(f"___WARNING___ Your expense [{expense}] is more than your funds: [loan:{loan_balance} + balance:{balance}].")
         print("The purchase couldn't be done.")
         break
-    expense_list.append(expense)
-    balance_list.append(balance)
-    loan_list.append(loan_balance)
+
+    expenses_data = {"expense_count": expense}
+    expenses_sheet.append(expenses_data)
+    balances_tuple = tuple((balance, loan_balance))
+    balances_list.append(balances_tuple)
 
     while True:
         next_expense_prompt = input("Would you like to do another expense? (yes/no) ").lower()
@@ -92,16 +94,11 @@ while not done:
             break
         else:
             print("Invalid input. Please enter 'yes' or 'no'. ")
-
-print(f"_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement ")
-if len(balance_list) == 0:
+################################################################################################
+print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
+if len(expenses_sheet) == 0:
     print("No purchase has been done. Thank you for using Budget Tracker.")
 else:
-    count = min(len(expense_list), len(balance_list), len(loan_list))
-    for i in range(count):
-        print(f"{i+1}) Expense: {expense_list[i]}, Balance: {balance_list[i]}, Loan: {loan_list[i]}.")
-
-
-
-
-
+    for i in range(len(expenses_sheet)):
+        print(f"{i+1}) Expense: {expenses_sheet[i]["expense_count"]},"
+              f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}.")
