@@ -4,16 +4,29 @@
 # Add one more input, which asks about a new expense. If yes, continue inputting; if no, stop inputting.
 # Stop inputting if the customer spends the whole balance and the loan
 # Change the code to save the balance and loan in lists after each expense
-# Change the code to use a list for saving the expenses
-# Use the lists to print the necessary data
+# Change the code to use a list for saving the expenses, Use the lists to print the necessary data
 # Refactor code to use at least two types of data structures for working with data:
 # For example: Expenses as a dictionary, Initial balances as tuples
+# With string operation, make better formatting for customer name, like removing extra spaces, and make capitalized name parts
+# For each transaction, create a transaction ID in this format name.surname-id and store them in the data structure for transactions
 
-name = input("What is your name? ")
-surname = input("What is your surname? ")
-full_name = name + " " + surname
-# print("The customer's full name is", full_name)
+#################################################################### check user's input for name surname
+def get_username(name_input):
+    space_count = name_input.count(" ")
+    if space_count !=0:
+        name_input = name_input.replace(" ", "")
+    if name_input.islower() == True:
+        name_input = name_input.capitalize()
+    if name_input.isupper() == True:
+        name_input = name_input.lower().capitalize()
 
+    return name_input
+
+################################################################### call user full name
+name = get_username(name_input=input("Whats your name? "))
+surname = get_username(name_input=input("Whats your surname? "))
+full_name = f"{name} {surname}"
+###################################################################
 expenses_sheet = []
 balances_list = []
 #################################################################### get loan balance
@@ -46,7 +59,7 @@ def get_expense():
         else:
             print("Error!!! enter numeric value for the 'Expense'.")
 
-
+######################################################################## call user's balances
 loan_balance = get_loan_balance()
 balance = get_balance()
 expense = get_expense()
@@ -71,14 +84,20 @@ while not done:
         print(f"___WARNING___ Your expense [{expense}] is more than your funds: [loan:{loan_balance} + balance:{balance}].")
         print("The purchase couldn't be done.")
         break
-
-    expenses_data = {"expense_count": expense}
+    expense_id = name.lower() + "." + surname.lower() + "-" + str(expense_count)
+    # print(f"{full_name} customer's expense ID is {expense_id}.")
+######################################################################### store expenses in dictionary
+    expenses_data = {"expense_count": expense,
+                     "expense_id": expense_id}
+####################################################################### convert expenses data to a list, ???
     expenses_sheet.append(expenses_data)
+##################################################################### store balance with loan balance in a tuple
     balances_tuple = tuple((balance, loan_balance))
+##################################################################### convert balance data to a list, so it can be added more
     balances_list.append(balances_tuple)
-
+##################################################################### ask for a new expense
     while True:
-        next_expense_prompt = input("Would you like to do another expense? (yes/no) ").lower()
+        next_expense_prompt = input("Would you like to do another expense? (yes/no) ").lower().strip()
         if next_expense_prompt == "yes":
             while True:
                 new_expense_input = input("What is your new expense? ")
@@ -94,6 +113,7 @@ while not done:
             break
         else:
             print("Invalid input. Please enter 'yes' or 'no'. ")
+
 ################################################################################################
 print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
 if len(expenses_sheet) == 0:
@@ -101,4 +121,5 @@ if len(expenses_sheet) == 0:
 else:
     for i in range(len(expenses_sheet)):
         print(f"{i+1}) Expense: {expenses_sheet[i]["expense_count"]},"
-              f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}.")
+              f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}."
+              f"\n  Expense ID is: {expenses_sheet[i]['expense_id']}.")
