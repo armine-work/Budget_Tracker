@@ -16,40 +16,26 @@ full_name = name + " " + surname
 
 expenses_sheet = []
 balances_list = []
-#################################################################### get loan balance
-def get_loan_balance():
+############################################### validate user's input
+def get_number(user_input, error_ms):
     while True:
-        loan_balance_input = input("What is your active loan balance? ")
-        if loan_balance_input.replace('.', '', 1).isnumeric():
-            loan_balance = float(loan_balance_input) if '.' in loan_balance_input else int(loan_balance_input)
-            return loan_balance
+        user_input_number = input(user_input).strip()
+        if user_input_number.replace(".", "", 1).isnumeric():
+            user_input_number = float(user_input_number) if '.' in user_input_number else int(user_input_number)
+            return user_input_number
         else:
-            print("Error!!! enter numeric value for the 'Loan Balance'.")
+            print(error_ms)
 
-####################################################################### get balance
-def get_balance():
-    while True:
-        balance_input = input("What is your balance? ")
-        if balance_input.replace('.', '', 1).isnumeric():
-            balance = float(balance_input) if '.' in balance_input else int(balance_input)
-            return balance
-        else:
-            print("Error!!! enter numeric value for the 'Balance'.")
+####################### receive loan balance, current balance and first expense from user:
+loan_balance = get_number(user_input="What's your loan balance? ",
+                          error_ms = "Please enter numeric, positive value for loan balance: ")
 
-###################################################################### get first expense
-def get_expense():
-    while True:
-        expense_input = input("What is your expense? ")
-        if expense_input.replace('.', '', 1).isnumeric():
-            expense = float(expense_input) if '.' in expense_input else int(expense_input)
-            return expense
-        else:
-            print("Error!!! enter numeric value for the 'Expense'.")
+balance = get_number(user_input="What's your current balance? ",
+                     error_ms ="Please enter numeric, positive value for balance: ")
 
+expense = get_number(user_input="What's your expense? ",
+                     error_ms="Please enter numeric, positive value for expense: ")
 
-loan_balance = get_loan_balance()
-balance = get_balance()
-expense = get_expense()
 
 expense_count = 0
 done = False
@@ -80,13 +66,8 @@ while not done:
     while True:
         next_expense_prompt = input("Would you like to do another expense? (yes/no) ").lower()
         if next_expense_prompt == "yes":
-            while True:
-                new_expense_input = input("What is your new expense? ")
-                if new_expense_input.replace('.', '', 1).isnumeric():
-                    expense = float(new_expense_input) if '.' in new_expense_input else int(new_expense_input)
-                    break
-                else:
-                    print("Please, enter numeric value for the 'New Expense'.")
+            expense = get_number(user_input="What's your new expense? ",
+                                 error_ms="Please enter numeric, positive value for expense: ")
             break
         elif next_expense_prompt == "no":
             print("Ok, thank you. The purchase process is finished.")
@@ -94,6 +75,7 @@ while not done:
             break
         else:
             print("Invalid input. Please enter 'yes' or 'no'. ")
+
 ################################################################################################
 print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
 if len(expenses_sheet) == 0:
