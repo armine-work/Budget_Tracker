@@ -11,12 +11,22 @@ Initialize a Python project in PyCharm called Budget Tracker
 * Do necessary checks.
 * Print in a readable and nice format.
 
-featurr\_refactor(branch)
+feature\_refactor(branch)
 
 * Refactor code to use at least two types of data structures for working with data.
 * For example: Expenses as a dictionary, Initial balances as tuples.
 * With string operation, make better formatting for customer name, like removing extra spaces, and make capitalized name parts.
 * For each transaction, create a transaction ID in this format name.surname-id and store them in the data structure for transactions.
 
+feature\_files\_data\_input (branch)
 
+\# Add a new input value that will check if the name, balance and loan will be provided manually or from a file
+
+\# • If Yes, the program should work as before (in terms of input)
+
+\# • If No, the program should read data from a file called “CustomerData”. File path must be an additional input.
+
+\# Input file one line: Name, Surname, balance, loan
+
+\# • Write transactions in to a file called “Transaction.txt”
 
