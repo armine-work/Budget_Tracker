@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger(__name__)
+
 #################################################################### get valid number from user
 def get_number(user_input, error_ms):
     while True:
@@ -7,3 +10,4 @@ def get_number(user_input, error_ms):
             return user_input_number
         else:
             print(error_ms)
+            logging.error(f"incorrect input from user: [{user_input_number}]")
