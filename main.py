@@ -1,68 +1,104 @@
-# Create a script that gets the full name, balance, expense, and active loan balance of a customer
-# Calculate and print the balance after the expense.
-# If the customer spends from the loan, then tell about it.
-# Add one more input, which asks about a new expense. If yes, continue inputting; if no, stop inputting.
-# Stop inputting if the customer spends the whole balance and the loan
-# Change the code to save the balance and loan in lists after each expense
-# Change the code to use a list for saving the expenses, Use the lists to print the necessary data
-# Refactor code to use at least two types of data structures for working with data:
-# For example: Expenses as a dictionary, Initial balances as tuples
 # With string operation, make better formatting for customer name, like removing extra spaces, and make capitalized name parts
 # For each transaction, create a transaction ID in this format name.surname-id and store them in the data structure for transactions
 
-#################################################################### check user's input for name surname
-def get_username(name_input):
-    space_count = name_input.count(" ")
-    if space_count !=0:
-        name_input = name_input.replace(" ", "")
-    if name_input.islower() == True:
-        name_input = name_input.capitalize()
-    if name_input.isupper() == True:
-        name_input = name_input.lower().capitalize()
+# Add a new input value that will check if the name, balance and loan will be provided manually or from a file
+# • If Yes, the program should work as before (in terms of input)
+# • If No, the program should read data from a file called “CustomerData”. File path must be an additional input.
+# Input file one line: Name, Surname, balance, loan
+# • Write transactions in to a file called “Transaction.txt”
+import os
 
-    return name_input
-
-################################################################### call user full name
-name = get_username(name_input=input("Whats your name? "))
-surname = get_username(name_input=input("Whats your surname? "))
-full_name = f"{name} {surname}"
-###################################################################
+################################################################### store expenses and balances in empty lists
 expenses_sheet = []
 balances_list = []
-#################################################################### get loan balance
-def get_loan_balance():
+#################################################################### get valid number from user
+def get_number(user_input, error_ms):
     while True:
-        loan_balance_input = input("What is your active loan balance? ")
-        if loan_balance_input.replace('.', '', 1).isnumeric():
-            loan_balance = float(loan_balance_input) if '.' in loan_balance_input else int(loan_balance_input)
-            return loan_balance
+        user_input_number = input(user_input).strip()
+        if user_input_number.replace(".", "", 1).isnumeric():
+            user_input_number = float(user_input_number) if '.' in user_input_number else int(user_input_number)
+            return user_input_number
         else:
-            print("Error!!! enter numeric value for the 'Loan Balance'.")
+            print(error_ms)
+############################################################################# store data from user in function file_path
+def get_data_from_file(file_path):
+    try:
+        with open(file_path, "r") as file_data:
+            ################################################################### read user's name and surname form the provided file
+            name = file_data.readline().strip()
+            if len(name) == 0:
+                name = input("Name is missing in the provided file. \n Enter user's name manually: ")
+            surname = file_data.readline().strip()
+            if len(surname) == 0:
+                surname = input("Surname is missing in the provided file. \n Enter user's surname manually: ")
+            ################### receive current balance from the provided file, if data is incorrect, ask to provide it manually
+            balance_file = file_data.readline().strip()
+            if balance_file.replace(".", "", 1).isnumeric():
+                balance = float(balance_file) if '.' in balance_file else int(balance_file)
+                print("The Current Balance from the provided file is:", balance)
+            else:
+                print("The Balance is invalid or missing in the provided file.")
+                balance = get_number(user_input="Enter user's current balance manually: ",
+                                     error_ms="Please enter numeric, positive value for balance: ")
+            ################### receive loan balance from the provided file, if data is incorrect, ask to provide it manually
+            loan_file = file_data.readline().strip()
+            if loan_file.replace(".", "", 1).isnumeric():
+                loan_balance = float(loan_file) if '.' in loan_file else int(loan_file)
+                print("The current Loan Balance from the provided file is:", loan_balance)
+            else:
+                print("The Loan Balance is invalid or missing in the provided file.")
+                loan_balance = get_number(user_input="Enter user's loan balance manually: ",
+                                          error_ms="Please enter numeric, positive value for loan balance: ")
+                ################# ask user to input their first expense
+            expense = get_number(user_input="Enter user's first expense manually: ",
+                                     error_ms="Please enter numeric, positive value for expense: ")
+            return name, surname, balance, loan_balance, expense
+    except FileNotFoundError as error:
+        print(f"Provided file doesn't exist", {error})
+        return None
+    except Exception as error:
+        print(f"An error occurred:", {error})
+        return None
+#################################################################### ask for data input choice
+while True:
+    select_input = input("Do you want to enter data manually? yes/no: ").lower().strip()
+    if select_input in ["yes", "no"]:
+        break
+    else:
+        print("Please enter yes or no.")
 
-####################################################################### get balance
-def get_balance():
+if select_input == "yes":
+    ################################################################### receive name, surname from user
+    name = input("What is user's name? ").strip()
+    surname = input("What is user's surname? ").strip()
+    ################################################## receive loan balance, current balance and first expense from user:
+    loan_balance = get_number(user_input="What is user's loan balance? ",
+                              error_ms = "Please enter numeric, positive value for loan balance: ")
+    balance = get_number(user_input="What is user's current balance? ",
+                         error_ms ="Please enter numeric, positive value for balance: ")
+    expense = get_number(user_input="What is user's first expense? ",
+                         error_ms="Please enter numeric, positive value for expense: ")
+else:
     while True:
-        balance_input = input("What is your balance? ")
-        if balance_input.replace('.', '', 1).isnumeric():
-            balance = float(balance_input) if '.' in balance_input else int(balance_input)
-            return balance
+        # file_path = r"C:\projects\Budget_Tracker\CustomerData.txt"  ##### for testing use
+        path_input = input("Enter file's path: ").strip()
+        file_name = "CustomerData.txt"
+        if os.path.basename(path_input) == file_name:
+            file_path = path_input
         else:
-            print("Error!!! enter numeric value for the 'Balance'.")
-
-###################################################################### get first expense
-def get_expense():
-    while True:
-        expense_input = input("What is your expense? ")
-        if expense_input.replace('.', '', 1).isnumeric():
-            expense = float(expense_input) if '.' in expense_input else int(expense_input)
-            return expense
+            file_path = os.path.join(path_input, file_name)
+        file_data = get_data_from_file(file_path)
+        if file_data:
+            name, surname, balance, loan_balance, expense = file_data
+            break
         else:
-            print("Error!!! enter numeric value for the 'Expense'.")
+            exit()
+################################################################### remove extra spaces and get full name
 
-######################################################################## call user's balances
-loan_balance = get_loan_balance()
-balance = get_balance()
-expense = get_expense()
+full_name = name.title() + " " + surname.title()
+full_name_split = full_name.split()
+full_name = " ".join(full_name_split)
+# print("full name is", full_name)
 
 expense_count = 0
 done = False
@@ -84,37 +120,47 @@ while not done:
         print(f"___WARNING___ Your expense [{expense}] is more than your funds: [loan:{loan_balance} + balance:{balance}].")
         print("The purchase couldn't be done.")
         break
-    expense_id = name.lower() + "." + surname.lower() + "-" + str(expense_count)
-    # print(f"{full_name} customer's expense ID is {expense_id}.")
-######################################################################### store expenses in dictionary
+    ##################################################################### create expenses ID after each transaction
+    space_count = full_name.count(" ")
+    username = full_name.replace(" ", ".")
+    expense_id = username.lower() + "-" + str(expense_count)
+    #print(f"{full_name} customer's expense ID is {expense_id}.")
+
+    #####################################################################armi store expenses in dictionary
     expenses_data = {"expense_count": expense,
                      "expense_id": expense_id}
-####################################################################### convert expenses data to a list, ???
+    ##################################################################### convert expenses data to a list
     expenses_sheet.append(expenses_data)
-##################################################################### store balance with loan balance in a tuple
+    ##################################################################### store balance with loan balance in a tuple
     balances_tuple = tuple((balance, loan_balance))
-##################################################################### convert balance data to a list, so it can be added more
+    ##################################################################### convert balance data to a list, so it can be added more
     balances_list.append(balances_tuple)
-##################################################################### ask for a new expense
+    ##################################################################### write transaction data into separate file
+    with open("Transaction.txt", "w") as transaction_file:
+        for i in range(len(expenses_sheet)):
+            expense_in_file = expenses_sheet[i]["expense_count"]
+            balance_in_file = balances_list[i][0]
+            loan_in_file = balances_list[i][1]
+            expense_ID_in_file = expenses_sheet[i]['expense_id']
+            transaction_file.write(f"Full name: {full_name}, "
+                                   f"Expense: {expense_in_file}, Balance: {balance_in_file}, Loan balance: {loan_in_file},"
+                                   f"Expense ID: {expense_ID_in_file}.\n")
+    print("The transaction data is written to 'Transactions.txt'.")
+    ##################################################################### ask for a new expense
     while True:
         next_expense_prompt = input("Would you like to do another expense? (yes/no) ").lower().strip()
         if next_expense_prompt == "yes":
-            while True:
-                new_expense_input = input("What is your new expense? ")
-                if new_expense_input.replace('.', '', 1).isnumeric():
-                    expense = float(new_expense_input) if '.' in new_expense_input else int(new_expense_input)
-                    break
-                else:
-                    print("Please, enter numeric value for the 'New Expense'.")
+            expense = get_number(user_input="What's your new expense? ",
+                                 error_ms="Please enter numeric, positive value for expense: ")
             break
         elif next_expense_prompt == "no":
             print("Ok, thank you. The purchase process is finished.")
             done = True
             break
         else:
-            print("Invalid input. Please enter 'yes' or 'no'. ")
+            print("Invalid input. Please enter 'yes' or 'no'.")
 
-################################################################################################
+############################################################################ print the results
 print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
 if len(expenses_sheet) == 0:
     print("No purchase has been done. Thank you for using Budget Tracker.")
@@ -123,3 +169,5 @@ else:
         print(f"{i+1}) Expense: {expenses_sheet[i]["expense_count"]},"
               f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}."
               f"\n  Expense ID is: {expenses_sheet[i]['expense_id']}.")
+
+
