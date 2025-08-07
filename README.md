@@ -1,4 +1,4 @@
-Budget_Tracker
+# Budget_Tracker
 
 Initialize a Python project in PyCharm called Budget Tracker
 ⦁	Create a script called main.py
@@ -18,9 +18,9 @@ feature_files_data_input (branch)
 • Add a new input value that will check if the name, balance and loan will be provided manually or from a file
 •  If Yes, the program should work as before (in terms of input)
 •  If No, the program should read data from a file called “CustomerData”. 
-   File path must be an additional input.
-   Input file one line: Name, Surname, balance, loan
-Write transactions in to a file called “Transaction.txt”
+•    File path must be an additional input.
+•    Input file one line: Name, Surname, balance, loan
+• Write transactions in to a file called “Transaction.txt”
 
 feature_modules (branch)
 • Create functions for the code (repeated codes and logical units must be in functions)

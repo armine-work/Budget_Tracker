@@ -1,5 +1,5 @@
-from app import validation_check
-
+from app.validation_check import get_number, get_full_name
+from app.expense_input import get_expense
 
 ############################################################################## store data from user in function file_path
 def get_data_from_file(file_path):
@@ -12,6 +12,7 @@ def get_data_from_file(file_path):
             surname = file_data.readline().strip()
             if len(surname) == 0:
                 surname = input("Surname is missing in the provided file. \n Enter user's surname manually: ")
+
             ################### receive current balance from the provided file, if data is incorrect, ask to provide it manually
             balance_file = file_data.readline().strip()
             if balance_file.replace(".", "", 1).isnumeric():
@@ -19,7 +20,7 @@ def get_data_from_file(file_path):
                 print("The Current Balance from the provided file is:", balance)
             else:
                 print("The Balance is invalid or missing in the provided file.")
-                balance = validation_check.get_number(user_input="Enter user's current balance manually: ",
+                balance = get_number(user_input="Enter user's current balance manually: ",
                                      error_ms="Please enter numeric, positive value for balance: ")
             ################### receive loan balance from the provided file, if data is incorrect, ask to provide it manually
             loan_file = file_data.readline().strip()
@@ -28,11 +29,10 @@ def get_data_from_file(file_path):
                 print("The current Loan Balance from the provided file is:", loan_balance)
             else:
                 print("The Loan Balance is invalid or missing in the provided file.")
-                loan_balance = validation_check.get_number(user_input="Enter user's loan balance manually: ",
+                loan_balance = get_number(user_input="Enter user's loan balance manually: ",
                                           error_ms="Please enter numeric, positive value for loan balance: ")
                 ################# ask user to input their first expense
-            expense = validation_check.get_number(user_input="Enter user's first expense manually: ",
-                                     error_ms="Please enter numeric, positive value for expense: ")
+            expense = get_expense("Enter user's first expense manually: ")
             return name, surname, balance, loan_balance, expense
     except FileNotFoundError as error:
         print(f"Provided file doesn't exist", {error})
@@ -40,5 +40,19 @@ def get_data_from_file(file_path):
     except Exception as error:
         print(f"An error occurred:", {error})
         return None
+    ##################################################################### write transaction data into separate file
 
+
+def write_data_to_file(expenses_sheet, balances_list, full_name ):
+    with open("Transaction.txt", "w") as transaction_file:
+        for i in range(len(expenses_sheet)):
+            expense_in_file = expenses_sheet[i]["expense_count"]
+            balance_in_file = balances_list[i][0]
+            loan_in_file = balances_list[i][1]
+            expense_ID_in_file = expenses_sheet[i]['expense_id']
+            transaction_file.write(f"Full name: {full_name}, "
+                                   f"Expense: {expense_in_file}, Balance: {balance_in_file}, Loan balance: {loan_in_file}, "
+                                   f"Expense ID: {expense_ID_in_file}.\n")
+
+    print("The transaction data is written to 'Transactions.txt'.")
 
