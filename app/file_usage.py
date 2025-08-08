@@ -80,6 +80,6 @@ def write_data_to_file(expenses_sheet, balances_list, full_name ):
                                    f"Expense: {expense_in_file}, Balance: {balance_in_file}, Loan balance: {loan_in_file}, "
                                    f"Expense ID: {expense_ID_in_file}.\n")
 
-    logging.info("The transaction data is written to 'Transactions.txt'.")
+    logger.info("The transaction data is written to 'Transactions.txt'.")
     ############
 
