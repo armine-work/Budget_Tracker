@@ -11,3 +11,17 @@ def get_number(user_input, error_ms):
         else:
             print(error_ms)
             logging.error(f"incorrect input from user: [{user_input_number}]")
+            #############
+
+################################################################## remove extra spaces and get full name
+def get_full_name(name, surname):
+    full_name = name.title() + " " + surname.title()
+    full_name_split = full_name.split()
+    full_name = " ".join(full_name_split)
+    # print("full name is", full_name)
+    logging.debug(f"full name after formatting: [{full_name}]")
+    ############
+    return full_name
+    
+    
+
