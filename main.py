@@ -1,6 +1,7 @@
 #import os
 import logging
-logging.basicConfig( level=logging.DEBUG,
+logging.basicConfig(level=logging.DEBUG,
+
                     filename = 'logs.txt',
                     format = '%(levelname)s - %(message)s - %(filename)s - %(asctime)s ',
                     datefmt = ' %H:%M:%S %m-%d-%Y',

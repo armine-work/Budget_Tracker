@@ -85,4 +85,3 @@
 #
 #     logger.info("The transaction data is written to 'Transactions.txt'.")
 #     ############
-#

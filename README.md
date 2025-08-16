@@ -26,11 +26,9 @@ feature_modules (branch)
 • Create functions for the code (repeated codes and logical units must be in functions)  
 • Create module(s) and/or packages for those functions  
 
-feature_classes (branch)  
-• Create a PersonBudget class with its constructor, attributes, and methods  
-• All input info: name, balance, and loan must be stored in the class object  
-• Transaction must be stored in the class objects as well  
-
+feature_logging (branch)  
+• Add logs for all print functions, and store them in separate file.  
+  
 feature_classes (branch)  
 • Create a PersonBudget class with its constructor, attributes, and methods  
 • All input info: name, balance, and loan must be stored in the class object  
