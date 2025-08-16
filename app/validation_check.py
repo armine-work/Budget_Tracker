@@ -18,10 +18,8 @@ def get_full_name(name, surname):
     full_name = name.title() + " " + surname.title()
     full_name_split = full_name.split()
     full_name = " ".join(full_name_split)
-    # print("full name is", full_name)
+    #print("full name is", full_name)
     logger.debug(f"full name after formatting: [{full_name}]")
     ############
     return full_name
-    
-    
 
