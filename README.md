@@ -1,4 +1,4 @@
-# Budget_Tracker  
+ # Budget_Tracker  
 
 Initialize a Python project in PyCharm called Budget Tracker  .
 ⦁	Create a script called main.py.  
@@ -36,3 +36,13 @@ feature_classes (branch)
 • All input info: name, balance, and loan must be stored in the class object  
 • Transaction must be stored in the class objects as well  
 • Note: getting customer's data from file on manually input is out of scope for this PR  
+
+feature_classes-2 (branch)  
+•   Encapsulate all data of the class  
+• In the base class, have a new method to calculate available funds (balance + loan)  
+• Create a subclass OnlineBudget  
+• Have an attribute online_loan  
+• Create all necessary methods for that  
+• Override the new method to calculate available fund (balance + loan)  
+• Override method(s) for expense, taking into account that sequences of the expense should be balance->loan->online_loan  
+Hint: the method for calculating the funds may help to better design the expenses method  
