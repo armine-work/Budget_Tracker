@@ -24,4 +24,3 @@ def get_full_name(name, surname):
     return full_name
 
 
-
