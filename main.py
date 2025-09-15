@@ -7,7 +7,9 @@ logging.basicConfig( level=logging.DEBUG,
                     filemode = 'w' )
 from app.validation_check import get_number, get_full_name
 from app.expense_input import get_expense
-from PersonBudget import PersonBudget
+
+from PersonBudget import PersonBudget, OnlineBudget
+
 
 def main():
 ############################################### get customer's name, surname from user's input
@@ -17,7 +19,7 @@ def main():
     surname = input("Enter customer's surname: ")
     logging.debug(f"customer's surname: {surname}")
     #############
-
+    
     ############################################## get customer's balance & loan balance from user's input
     balance = get_number(user_input="What is customer's current balance? ",
                           error_ms ="Please enter numeric, positive value for balance: ")
@@ -27,97 +29,41 @@ def main():
                               error_ms = "Please enter numeric, positive value for loan balance: ")
     logging.debug(f"customer's loan balance: [{loan_balance}]")
     #############
-############################################################################ get customer's full name
+
+    ############################################################################ get customer's full name
     customer = PersonBudget(name, surname, balance, loan_balance)
 
-    full_name = get_full_name(name, surname)
-    logging.debug(f"customer's full_name: [{full_name}]")
-    #############
     expense = get_expense(user_input="What is customer's first expense? ")
-    logging.debug(f"customer's first expense: [{expense}]")
+    customer.balance_calculator(expense)
+    customer.print_transactions()
+
+    print("\n----------------Next customer ----------------\n")
+    ######################################################################### get customers' online loan balance
+    name = input("Enter new customer's name: ")
+    logging.debug(f"new customer's name: {name}")
     #############
-    customer.balance_calculator(expense, full_name)
-    customer.print_transactions(full_name)
+    surname = input("Enter new customer's surname: ")
+    logging.debug(f"new customer's surname: {surname}")
+    #############
+    ############################################## get customer's balance & loan balance from user's input
+    balance = get_number(user_input="What is new customer's current balance? ",
+                          error_ms ="Please enter numeric, positive value for balance: ")
+    logging.debug(f" new customer's current balance: [{balance}]")
+    #############
+    loan_balance = get_number(user_input="What is new customer's loan balance? ",
+                              error_ms = "Please enter numeric, positive value for loan balance: ")
+    logging.debug(f"new customer's loan balance: [{loan_balance}]")
+    #############
+    online_loan = get_number(user_input="What is new customer's online loan? ",
+                             error_ms="Please enter numeric, positive value for online loan: ")
+    logging.debug(f"customer's online loan: [{online_loan}]")
+    #############
+
+    online_customer = OnlineBudget(name, surname, balance, loan_balance, online_loan)
+    
+    expense = get_expense(user_input="What is customer's first expense? ")
+    online_customer.balance_calculator(expense)
+    online_customer.print_transactions()
 
 if __name__ == "__main__":
     main()
-=======
-from app.file_usage import write_data_to_file, get_data_from_file
-from app.expense_input import get_expense
-from app.balances import balance_calculator
-
-################################################################### store expenses and balances in empty lists
-expenses_sheet = []
-balances_list = []
-
-#################################################################### ask for data input choice
-while True:
-    select_input = input("Do you want to enter data manually? yes/no: ").lower().strip()
-    logging.debug(f"data selection input: [{select_input}]")
-    if select_input in ["yes", "no"]:
-        break
-    else:
-        print("Please enter yes or no.")
-        logging.error(f"wrong input from user[{select_input}]")
-
-if select_input == "yes":
-    ################################################################### receive name, surname from user
-    name = input("What is user's name? ").strip()
-    logging.debug(f"user's name: [{name}]")
-    ############
-    surname = input("What is user's surname? ").strip()
-    logging.debug(f"user's surname: [{surname}]")
-    #############
-    ################################################## receive loan balance, current balance and first expense from user:
-    loan_balance = get_number(user_input="What is user's loan balance? ",
-                              error_ms = "Please enter numeric, positive value for loan balance: ")
-    logging.debug(f"user's loan balance: [{loan_balance}]")
-    #############
-    balance = get_number(user_input="What is user's current balance? ",
-                         error_ms ="Please enter numeric, positive value for balance: ")
-    logging.debug(f"user's current balance: [{balance}]")
-    ###############
-    expense = get_expense("What is user's first expense? ")
-    logging.debug(f"user's first expense: [{expense}]")
-    #############
-else:
-    while True:
-        # file_path = r"C:\projects\Budget_Tracker\CustomerData.txt"  ##### for testing use
-        path_input = input("Enter file's path: ").strip()
-        logging.debug(f"manually entered path: [{path_input}]")
-        #############
-        ############################################################### validate the inputted file's path
-        file_name = "CustomerData.txt"
-        if os.path.basename(path_input) == file_name:
-            file_path = path_input
-        else:
-            file_path = os.path.join(path_input, file_name)
-        ############################################################## get data from the file
-        file_data = get_data_from_file(file_path)
-        if file_data:
-            name, surname, balance, loan_balance, expense = file_data
-            break
-        else:
-            exit()
-
-############################################################################ call the expanses calculator
-full_name = get_full_name(name, surname)
-balance_calculator(expense, balance, loan_balance, full_name, expenses_sheet, balances_list)
-
-############################################################################ print the results
-print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
-if len(expenses_sheet) == 0:
-    print("No purchase has been done. Thank you for using Budget Tracker.")
-    logging.info("No purchase has been done.")
-    ############
-else:
-    for i in range(len(expenses_sheet)):
-        print(
-              f"{i+1}) Expense: {expenses_sheet[i]["expense_count"]},"
-              f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}."
-              f"\n  Expense ID is: {expenses_sheet[i]['expense_id']}.")
-        logging.info(
-              f"\n {i+1}) Expense: {expenses_sheet[i]["expense_count"]},"
-              f" Balance: {balances_list[i][0]}, Loan: {balances_list[i][1]}."
-              f"\n  Expense ID is: {expenses_sheet[i]['expense_id']}.")
-        #############

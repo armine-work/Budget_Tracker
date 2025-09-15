@@ -22,5 +22,3 @@ def get_full_name(name, surname):
     logger.debug(f"full name after formatting: [{full_name}]")
     ############
     return full_name
-
-
