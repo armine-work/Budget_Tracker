@@ -32,7 +32,9 @@ class PersonBudget:
 
 
 ################################################################# calculate balance after expense
-    def balance_calculator(self, expense, full_name):
+    def balance_calculator(self, expense):
+        full_name = get_full_name(self.name, self.surname)
+        
         expense_count = 0
         done = False
 
@@ -95,7 +97,8 @@ class PersonBudget:
                     logging.error(f"wrong input from user [{next_expense_prompt}]")
                     ############
 
-    def print_transactions(self, full_name):
+    def print_transactions(self):
+        full_name = get_full_name(self.name, self.surname)
         print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
         if len(self.transactions_data) == 0:
             print("No purchase has been done. Thank you for using Budget Tracker.")
@@ -124,7 +127,9 @@ class OnlineBudget(PersonBudget):
         return self.__online_loan
 
 
-    def balance_calculator(self, expense, full_name):
+    def balance_calculator(self, expense):
+        full_name = get_full_name(self.name, self.surname)
+        
         expense_count = 0
         done = False
 
@@ -219,7 +224,8 @@ class OnlineBudget(PersonBudget):
                     ############
 
 
-    def print_transactions(self, full_name):
+    def print_transactions(self):
+        full_name = get_full_name(self.name, self.surname)
         print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
         if len(self.transactions_data) == 0:
             print("No purchase has been done. Thank you for using Budget Tracker.")

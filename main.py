@@ -30,11 +30,11 @@ def main():
     ############################################################################ get customer's full name
     customer = PersonBudget(name, surname, balance, loan_balance)
 
-    full_name = get_full_name(name, surname)
+    # full_name = get_full_name(name, surname)
     expense = get_expense(user_input="What is customer's first expense? ")
 
-    customer.balance_calculator(expense, full_name)
-    customer.print_transactions(full_name)
+    customer.balance_calculator(expense)
+    customer.print_transactions()
 
     print("\n----------------Next customer ----------------\n")
     ######################################################################### get customers' online loan balance
@@ -62,8 +62,8 @@ def main():
     full_name = get_full_name(name, surname)
     expense = get_expense(user_input="What is customer's first expense? ")
 
-    online_customer.balance_calculator(expense, full_name)
-    online_customer.print_transactions(full_name)
+    online_customer.balance_calculator(expense)
+    online_customer.print_transactions()
 
 if __name__ == "__main__":
     main()
