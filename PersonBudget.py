@@ -10,7 +10,7 @@ from app.validation_check import get_number, get_full_name
 
 class PersonBudget:
     def __init__(self, name, surname, balance, loan_balance):
-        #################################################################
+
         self.name = name
         self.surname = surname
         self._balance = balance
@@ -78,6 +78,7 @@ class PersonBudget:
             ##################################################################### ask for a new expense
             while True:
                 next_expense_prompt = input("\nWould you like to do another expense? (yes/no) ").lower().strip()
+
                 logging.debug(f"next expense prompt: [{next_expense_prompt}]")
                 #############
                 if next_expense_prompt == "yes":
@@ -97,8 +98,10 @@ class PersonBudget:
                     logging.error(f"wrong input from user [{next_expense_prompt}]")
                     ############
 
+
     def print_transactions(self):
         full_name = get_full_name(self.name, self.surname)
+
         print(f"\n_______________FINAL RESULTS_______________ \n {full_name} customer's bank statement:")
         if len(self.transactions_data) == 0:
             print("No purchase has been done. Thank you for using Budget Tracker.")
@@ -113,8 +116,6 @@ class PersonBudget:
                       f"Balance: {transaction['balance']}, Loan: {transaction['loan_balance']}."
                       f"Expense ID is: {transaction['expense_id']}")
                 #############
-
-
 
 class OnlineBudget(PersonBudget):
     def __init__(self, name, surname, balance, loan_balance, online_loan):
@@ -239,9 +240,3 @@ class OnlineBudget(PersonBudget):
                 logging.debug(f"Expense: {transaction['expense']}, "
                       f"Balance: {transaction['balance']}, Loan: {transaction['loan_balance']}, Online loan: {transaction['online_loan']}."
                       f" Expense ID is: {transaction['expense_id']}")
-
-
-
-
-
-

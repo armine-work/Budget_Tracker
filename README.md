@@ -1,10 +1,10 @@
  # Budget_Tracker  
 
-Initialize a Python project in PyCharm called Budget Tracker  .
+Initialize a Python project in PyCharm called Budget Tracker.  
 ⦁	Create a script called main.py.  
 ⦁	Create a script that gets the full name, balance, expense, and active loan balance of a customer.  
 ⦁	Calculate and print the balance after the expense.  
-⦁	If the customer spends from the loan, then tell about it  
+⦁	If the customer spends from the loan, then tell about it  .
 ⦁	Do necessary checks.  
 ⦁	Print in a readable and nice format.  
 
@@ -20,15 +20,15 @@ feature_files_data_input (branch)
 •  If No, the program should read data from a file called “CustomerData”.    
    File path must be an additional input.  
    Input file one line: Name, Surname, balance, loan  
-•  Write transactions in to a file called “Transaction.txt”  
-
+•  Write transactions in to a file called “Transaction.txt”   
+  
 feature_modules (branch)  
-• Create functions for the code (repeated codes and logical units must be in functions)  
-• Create module(s) and/or packages for those functions  
-
-feature_logging (branch)
-• Add logs for all print functions, and store them in separate file. 
-
+• Create functions for the code (repeated codes and logical units must be in functions).  
+• Create module(s) and/or packages for those functions.  
+  
+feature_logging (branch)  
+• Add logs for all print functions, and store them in separate file.  
+  
 feature_classes (branch)  
 • Create a PersonBudget class with its constructor, attributes, and methods  
 • All input info: name, balance, and loan must be stored in the class object  

@@ -7,7 +7,9 @@ logging.basicConfig( level=logging.DEBUG,
                     filemode = 'w' )
 from app.validation_check import get_number, get_full_name
 from app.expense_input import get_expense
+
 from PersonBudget import PersonBudget, OnlineBudget
+
 
 def main():
 ############################################### get customer's name, surname from user's input
@@ -17,6 +19,7 @@ def main():
     surname = input("Enter customer's surname: ")
     logging.debug(f"customer's surname: {surname}")
     #############
+    
     ############################################## get customer's balance & loan balance from user's input
     balance = get_number(user_input="What is customer's current balance? ",
                           error_ms ="Please enter numeric, positive value for balance: ")
@@ -30,9 +33,7 @@ def main():
     ############################################################################ get customer's full name
     customer = PersonBudget(name, surname, balance, loan_balance)
 
-    # full_name = get_full_name(name, surname)
     expense = get_expense(user_input="What is customer's first expense? ")
-
     customer.balance_calculator(expense)
     customer.print_transactions()
 
@@ -59,9 +60,8 @@ def main():
     #############
 
     online_customer = OnlineBudget(name, surname, balance, loan_balance, online_loan)
-    full_name = get_full_name(name, surname)
+    
     expense = get_expense(user_input="What is customer's first expense? ")
-
     online_customer.balance_calculator(expense)
     online_customer.print_transactions()
 
