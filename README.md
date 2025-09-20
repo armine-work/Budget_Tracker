@@ -4,7 +4,7 @@ Initialize a Python project in PyCharm called Budget Tracker.
 ⦁	Create a script called main.py.  
 ⦁	Create a script that gets the full name, balance, expense, and active loan balance of a customer.  
 ⦁	Calculate and print the balance after the expense.  
-⦁	If the customer spends from the loan, then tell about it  .
+⦁	If the customer spends from the loan, then tell about it.  
 ⦁	Do necessary checks.  
 ⦁	Print in a readable and nice format.  
 
@@ -20,19 +20,19 @@ feature_files_data_input (branch)
 •  If No, the program should read data from a file called “CustomerData”.    
    File path must be an additional input.  
    Input file one line: Name, Surname, balance, loan  
-•  Write transactions in to a file called “Transaction.txt”   
-  
-feature_modules (branch)  
-• Create functions for the code (repeated codes and logical units must be in functions).  
-• Create module(s) and/or packages for those functions.  
-  
-feature_logging (branch)  
-• Add logs for all print functions, and store them in separate file.  
-  
-feature_classes (branch)  
-• Create a PersonBudget class with its constructor, attributes, and methods  
-• All input info: name, balance, and loan must be stored in the class object  
-• Transaction must be stored in the class objects as well  
+•  Write transactions in to a file called “Transaction.txt”  
+
+feature_modules (branch)
+• Create functions for the code (repeated codes and logical units must be in functions).
+• Create module(s) and/or packages for those functions.
+
+feature_logging (branch)
+• Add logs for all print functions, and store them in separate file.
+
+feature_classes (branch)
+• Create a PersonBudget class with its constructor, attributes, and methods
+• All input info: name, balance, and loan must be stored in the class object
+• Transaction must be stored in the class objects as well
 • Note: getting customer's data from file on manually input is out of scope for this PR  
 
 feature_classes-2 (branch)  
@@ -44,3 +44,16 @@ feature_classes-2 (branch)
 • Override the new method to calculate available fund (balance + loan)  
 • Override method(s) for expense, taking into account that sequences of the expense should be balance->loan->online_loan  
 Hint: the method for calculating the funds may help to better design the expenses method  
+
+
+feature_class_choice (branch)  
+• The input parameter requires providing an input method (file or keyboard input) that needs to be changed.  
+• It should allow input: manually, file, json.  
+• For manual and file, we already have implementation.  
+• When the user inputs json, the application should read data from a json file.  
+• All output should be written in JSON format as well.  
+
+• Ask user to choose using online loan or not   
+• Use parent class in child class  
+
+
