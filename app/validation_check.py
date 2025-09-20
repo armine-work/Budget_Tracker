@@ -2,7 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 #################################################################### get valid number from user
-def get_number(user_input, error_ms):
+def validate_number(user_input, error_ms):
     while True:
         user_input_number = input(user_input).strip()
         if user_input_number.replace(".", "", 1).isnumeric():
