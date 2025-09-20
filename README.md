@@ -56,3 +56,4 @@ feature_class_choice (branch)
 • Ask user to choose using online loan or not   
 • Use parent class in child class  
 
+

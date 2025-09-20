@@ -6,16 +6,19 @@ logging.basicConfig( level=logging.DEBUG,
                     datefmt = ' %H:%M:%S %m-%d-%Y',
                     filemode = 'w' )
 
+
 #from app.validation_check import validate_number, get_full_name
 
 from app.customer_data_input import *
 
 from app.file_usage import *
 
+
 from PersonBudget import PersonBudget, OnlineBudget
 
+
 def main():
-############################################### get customer's name, surname from user's input
+    ############################################### get customer's name, surname from user's input
     while True:
         select_input = input("How to input customer data? ['manually', 'text', 'json'] ").lower().strip()
         logging.debug(f"data selection input: [{select_input}]")
@@ -61,7 +64,7 @@ def main():
                 print("Please enter one of these: 'yes/no'.")
 
 
-#############################################################################################################################
+    #############################################################################################################################
     elif select_input == "text":
         while True:
             # file_path = r"C:\projects\Budget_Tracker\CustomerData.txt"  ##### for testing use

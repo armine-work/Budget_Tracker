@@ -11,7 +11,7 @@ from app.customer_data_input import *
 
 class PersonBudget:
     def __init__(self, name, surname, balance, loan_balance):
-        #################################################################
+
         self.name = name
         self.surname = surname
         self._balance = balance
@@ -80,6 +80,7 @@ class PersonBudget:
             ##################################################################### ask for a new expense
             while True:
                 next_expense_prompt = input("\nWould you like to do another expense? (yes/no) ").lower().strip()
+
                 logging.debug(f"next expense prompt: [{next_expense_prompt}]")
                 #############
                 if next_expense_prompt == "yes":
@@ -98,6 +99,7 @@ class PersonBudget:
                     logging.error(f"wrong input from user [{next_expense_prompt}]")
                     ############
         return self._balance, self._loan_balance, self.expense_count, expense
+
 
 
     def print_transactions(self):

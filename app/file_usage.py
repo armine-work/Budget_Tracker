@@ -154,3 +154,4 @@ def write_data_to_json(transactions):
 
     logger.info("The transaction data is written to 'Transactions.json'.")
     print("The transaction data is written to 'Transactions.json'.")
+
